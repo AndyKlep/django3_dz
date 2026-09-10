@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Добавить фильм | Movie Project</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+</head>
+
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{% url 'films_list' %}">
+                🎬 Movie Project
+            </a>
+
+            <a href="{% url 'films_list' %}" class="btn btn-outline-light">
+                Все фильмы
+            </a>
+        </div>
+    </nav>
+
+    <main class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4 p-md-5">
+
+                        <span class="badge text-bg-primary mb-3">
+                            Новая запись
+                        </span>
+
+                        <h1 class="h2 fw-bold mb-3">
+                            Добавить фильм
+                        </h1>
+
+                        <p class="text-secondary mb-4">
+                            Укажите название, краткое описание фильма и ваш отзыв.
+                            После отправки информация будет сохранена в базе данных.
+                        </p>
+
+                        <form method="post">
+                            {% csrf_token %}
+
+                            {% for field in form %}
+                                <div class="mb-3">
+                                    <label
+                                        for="{{ field.id_for_label }}"
+                                        class="form-label fw-semibold"
+                                    >
+                                        {{ field.label }}
+                                    </label>
+
+                                    {{ field }}
+
+                                    {% if field.errors %}
+                                        <div class="text-danger small mt-1">
+                                            {{ field.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+
+                            <div class="d-flex flex-wrap gap-2 mt-4">
+                                <button type="submit" class="btn btn-primary">
+                                    Сохранить фильм
+                                </button>
+
+                                <a
+                                    href="{% url 'films_list' %}"
+                                    class="btn btn-outline-secondary"
+                                >
+                                    Отмена
+                                </a>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

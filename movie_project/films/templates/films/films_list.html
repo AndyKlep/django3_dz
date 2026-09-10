@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Фильмы | Movie Project</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+</head>
+
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{% url 'films_list' %}">
+                🎬 Movie Project
+            </a>
+
+            <a href="{% url 'add_film' %}" class="btn btn-warning">
+                + Добавить фильм
+            </a>
+        </div>
+    </nav>
+
+    <main class="container py-5">
+
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-5">
+            <div>
+                <span class="badge text-bg-primary mb-2">
+                    База данных фильмов
+                </span>
+
+                <h1 class="display-6 fw-bold mb-0">
+                    Мои фильмы и отзывы
+                </h1>
+            </div>
+
+            <span class="text-secondary">
+                Всего записей: {{ films|length }}
+            </span>
+        </div>
+
+        <div class="row g-4">
+            {% for film in films %}
+                <div class="col-md-6 col-lg-4">
+                    <article class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4 d-flex flex-column">
+
+                            <h2 class="h4 fw-bold mb-3">
+                                {{ film.title }}
+                            </h2>
+
+                            <h3 class="h6 text-primary">
+                                Описание
+                            </h3>
+
+                            <p class="text-secondary">
+                                {{ film.description }}
+                            </p>
+
+                            <hr>
+
+                            <h3 class="h6 text-success">
+                                Отзыв
+                            </h3>
+
+                            <p class="mb-0">
+                                {{ film.review }}
+                            </p>
+
+                        </div>
+                    </article>
+                </div>
+
+            {% empty %}
+                <div class="col-12">
+                    <div class="alert alert-info d-flex justify-content-between align-items-center flex-wrap gap-3 mb-0">
+                        <span>
+                            В базе пока нет фильмов. Добавьте первую запись.
+                        </span>
+
+                        <a href="{% url 'add_film' %}" class="btn btn-primary">
+                            Добавить фильм
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+    </main>
+
+</body>
+</html>
